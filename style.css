@@ -12,6 +12,14 @@ body {
   padding: 2rem;
   position: relative;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fix for mobile webkit */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 /* Floating particles */
@@ -134,6 +142,7 @@ body::after {
     transform: translate(60px, 60px);
   }
 }
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -257,6 +266,9 @@ header h1 {
   color: #e8e9ed;
   font-size: 1rem;
   transition: all 0.3s ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .form-group input:focus,
@@ -475,6 +487,12 @@ header h1 {
 
 .charts-grid {
   display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.chart-row {
+  display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
 }
@@ -485,7 +503,6 @@ header h1 {
   border-radius: 16px;
   padding: 1.5rem;
   transition: all 0.3s ease;
-  width: 100%;
 }
 
 .chart-item:hover {
@@ -626,9 +643,26 @@ header h1 {
   color: rgba(232, 233, 237, 0.5);
 }
 
+/* Tablet styles */
+@media (max-width: 820px) {
+  .chart-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .analytics-dashboard {
+    padding: 1.5rem;
+  }
+}
+
+/* Mobile landscape and smaller tablets */
 @media (max-width: 768px) {
   body {
     padding: 1rem;
+  }
+
+  .container {
+    max-width: 100%;
   }
 
   .form-row {
@@ -637,6 +671,11 @@ header h1 {
 
   header h1 {
     font-size: 2rem;
+  }
+
+  .summary {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .analytics-header {
@@ -649,6 +688,7 @@ header h1 {
   .analytics-controls {
     justify-content: center;
     gap: 0.8rem;
+    flex-wrap: wrap;
   }
 
   .score-display {
@@ -672,27 +712,18 @@ header h1 {
     font-size: 2.2rem;
   }
 
-  .charts-grid {
+  .chart-row {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
   .chart-item {
-    padding: 1rem;
+    padding: 1.2rem;
+    margin: 0;
   }
 
   .chart-item canvas {
     max-height: 280px;
-  }
-
-  /* Disable custom cursor on mobile */
-  .cursor,
-  .cursor-trail {
-    display: none;
-  }
-  
-  body {
-    cursor: auto;
   }
 
   .transactions-header {
@@ -701,33 +732,270 @@ header h1 {
     text-align: center;
   }
 
+  .transaction-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.2rem;
+  }
+
+  .transaction-amount {
+    margin-right: 0;
+    align-self: flex-end;
+  }
+
   .budget-header {
     flex-direction: column;
     align-items: stretch;
     text-align: center;
   }
 
+  .budgets-grid {
+    grid-template-columns: 1fr;
+  }
+
   .modal-content {
     width: 95%;
     margin: 2% auto;
+    max-height: 90vh;
   }
 
   .budget-category-item {
     grid-template-columns: 1fr;
     text-align: center;
+    gap: 0.5rem;
   }
 
   .analytics-dashboard {
-    padding: 1.5rem;
+    padding: 1.2rem;
   }
 
   .health-score-card {
+    padding: 1.2rem;
+  }
+
+  .form-container {
     padding: 1.5rem;
+  }
+
+  .transactions-container,
+  .budget-container {
+    padding: 1.5rem;
+  }
+
+  /* Disable custom cursor and particles on mobile */
+  .cursor,
+  .cursor-trail {
+    display: none;
+  }
+  
+  .floating-particles {
+    display: none;
+  }
+  
+  body {
+    cursor: auto;
   }
 }
 
+/* iPhone 14 Pro Max and similar large phones */
+@media (max-width: 430px) {
+  body {
+    padding: 0.8rem;
+  }
 
+  header h1 {
+    font-size: 1.8rem;
+  }
 
+  .card {
+    padding: 1.2rem;
+  }
+
+  .amount {
+    font-size: 1.6rem;
+  }
+
+  .analytics-dashboard,
+  .form-container,
+  .transactions-container,
+  .budget-container {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .score-circle {
+    width: 100px;
+    height: 100px;
+  }
+
+  .score-circle::before {
+    width: 80px;
+    height: 80px;
+  }
+
+  .score-circle #healthScore {
+    font-size: 1.8rem;
+  }
+
+  .chart-item {
+    padding: 1rem;
+  }
+
+  .chart-item h3 {
+    font-size: 1.1rem;
+  }
+
+  .analytics-controls {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .analytics-controls select,
+  .btn-export {
+    width: 100%;
+    text-align: center;
+    min-height: 44px; /* iOS minimum touch target */
+  }
+}
+
+/* iPhone 14/13/12 and similar */
+@media (max-width: 390px) {
+  body {
+    padding: 0.5rem;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  .summary {
+    gap: 0.8rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .amount {
+    font-size: 1.4rem;
+  }
+
+  .analytics-dashboard,
+  .form-container,
+  .transactions-container,
+  .budget-container {
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+  }
+
+  .health-score-card {
+    padding: 1rem;
+  }
+
+  .score-circle {
+    width: 90px;
+    height: 90px;
+  }
+
+  .score-circle::before {
+    width: 70px;
+    height: 70px;
+  }
+
+  .score-circle #healthScore {
+    font-size: 1.6rem;
+  }
+
+  .score-breakdown {
+    gap: 0.8rem;
+  }
+
+  .score-metric {
+    padding: 0.8rem;
+  }
+
+  .chart-item {
+    padding: 0.8rem;
+  }
+
+  .chart-item h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .transaction-item {
+    padding: 1rem;
+  }
+
+  .btn-delete {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .modal-content {
+    width: 98%;
+    margin: 1% auto;
+  }
+}
+
+/* Very small phones (iPhone SE, etc.) */
+@media (max-width: 320px) {
+  body {
+    padding: 0.3rem;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  .analytics-dashboard,
+  .form-container,
+  .transactions-container,
+  .budget-container {
+    padding: 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .score-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .score-circle::before {
+    width: 60px;
+    height: 60px;
+  }
+
+  .score-circle #healthScore {
+    font-size: 1.4rem;
+  }
+
+  .chart-item {
+    padding: 0.6rem;
+  }
+
+  .chart-item canvas {
+    max-height: 200px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-add {
+    padding: 0.8rem;
+    font-size: 1rem;
+    min-height: 44px;
+  }
+  
+  button, .btn-delete, .btn-export, .btn-budget {
+    min-height: 44px;
+  }
+}
 
 /* Budget Management */
 .budget-container {
@@ -1034,7 +1302,6 @@ header h1 {
     font-size: 0.9rem;
     line-height: 1.4;
 }
-
 
 /* Interactive cursor effect */
 body {
