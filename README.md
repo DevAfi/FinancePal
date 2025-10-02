@@ -1,5 +1,3 @@
-Here’s a short, personal README tailored to your deployed finance app.
-
 # Personal Finance Tracker
 
 Live App: [polite-alfajores-b90fe1.netlify.app](https://polite-alfajores-b90fe1.netlify.app)
