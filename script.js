@@ -12,3 +12,7 @@ function init() {
 }
 
 window.addEventListener('DOMContentLoaded', init);
+
+function saveTransactions() {
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+}
