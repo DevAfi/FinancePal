@@ -26,7 +26,7 @@ document.getElementById('transactionForm').addEventListener('submit', function(e
     ev.preventDefault();
 
     const description = document.getElementById('description').value.trim();
-    const amount = document.getElementById('amount').value.trim();
+    const amount = parseFloat(document.getElementById('amount').value);
     const type = document.getElementById('type').value.trim();
     const category = document.getElementById('category').value.trim();
     const date = document.getElementById('date').value.trim();
@@ -47,8 +47,11 @@ document.getElementById('transactionForm').addEventListener('submit', function(e
 
     transactions.push(transaction);
 
-    this.reset();
-    document.getElementById(date).valueAsDate = new Date();
+saveTransactions();
+updateUI();
+
+this.reset();
+document.getElementById('date').valueAsDate = new Date();
 });
 
 
@@ -80,7 +83,7 @@ function updateSummary() {
 // big one below: displaying the transactions list --------- need to build the html not only random JS
 
 function displayTransactions() {
-    const container = document.getElementById('transactionslist');
+    const container = document.getElementById('transactionsList');
 
     if (transactions.length === 0) {
         container.innerHTML = '<div class="empty-state">No transactions yet. Add your first one above!</div>';
@@ -110,4 +113,20 @@ function displayTransactions() {
 }
 
 
+}
+
+// deleting transactions and updating UI:
+
+function deleteTransaction(id) {
+    if (!confirm('Are you sure you want to delete this transaction?')) {
+        return;
+    }
+    transactions = transactions.filter(t => t.id !== id);
+    saveTransactions();
+    updateUI();
+}
+function updateUI() {
+    updateSummary();
+    displayTransactions();
+    //updateChart();
 }
