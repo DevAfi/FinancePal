@@ -63,3 +63,15 @@ function calculateExpenses() {
 function calculateBalance() {
     return calculateIncome() - calculateExpenses();
 }
+
+//
+
+function updateSummary() {
+    const income = calculateIncome();
+    const expenses = calculateExpenses();
+    const balance = calculateBalance();
+    
+    document.getElementById('totalIncome').textContent = `£${income.toFixed(2)}`;
+    document.getElementById('totalExpenses').textContent = `£${expenses.toFixed(2)}`;
+    document.getElementById('balance').textContent = `£${balance.toFixed(2)}`;
+}
