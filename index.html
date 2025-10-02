@@ -77,8 +77,58 @@
             </form>
         </div>
  
-        <div class="chart-container">
+        <!-- Analytics Dashboard -->
+        <div class="analytics-dashboard">
+            <div class="analytics-header">
+                <h2>Financial Analytics</h2>
+                <div class="analytics-controls">
+                    <select id="analyticsTimeframe">
+                        <option value="3months">Last 3 Months</option>
+                        <option value="6months">Last 6 Months</option>
+                        <option value="1year" selected>Last Year</option>
+                        <option value="all">All Time</option>
+                    </select>
+                    <button id="exportDataBtn" class="btn-export">Export Data</button>
+                </div>
+            </div>
+
+            <!-- Financial Health Score -->
+            <div class="health-score-container">
+                <div class="health-score-card">
+                    <h3>Financial Health Score</h3>
+                    <div class="score-display">
+                        <div class="score-circle">
+                            <span id="healthScore">85</span>
+                            <span class="score-label">/ 100</span>
+                        </div>
+                        <div class="score-breakdown">
+                            <div class="score-metric">
+                                <span class="metric-label">Savings Rate</span>
+                                <span class="metric-value" id="savingsRate">25%</span>
+                            </div>
+                            <div class="score-metric">
+                                <span class="metric-label">Expense Stability</span>
+                                <span class="metric-value" id="expenseStability">Good</span>
+                            </div>
+                            <div class="score-metric">
+                                <span class="metric-label">Category Balance</span>
+                                <span class="metric-value" id="categoryBalance">Excellent</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Grid -->
             <div class="charts-grid">
+                <div class="chart-item">
+                    <h3>Income vs Expenses Trend</h3>
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <div class="chart-item">
+                    <h3>Monthly Spending Patterns</h3>
+                    <canvas id="monthlyChart"></canvas>
+                </div>
                 <div class="chart-item">
                     <h3>Income by Category</h3>
                     <canvas id="incomeChart"></canvas>
@@ -90,6 +140,31 @@
             </div>
         </div>
 
+
+        <!-- Budget Management -->
+        <div class="budget-container">
+            <div class="budget-header">
+                <h2>Budget Management</h2>
+                <button id="setBudgetBtn" class="btn-budget">Set Budgets</button>
+            </div>
+            <div id="budgetsList" class="budgets-grid"></div>
+        </div>
+
+        <!-- Budget Modal -->
+        <div id="budgetModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Set Category Budgets</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="budgetForm">
+                        <div id="budgetCategories"></div>
+                        <button type="submit" class="btn-save">Save Budgets</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <div class="transactions-container">
             <h2>Recent Transactions</h2>
