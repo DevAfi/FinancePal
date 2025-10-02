@@ -75,3 +75,39 @@ function updateSummary() {
     document.getElementById('totalExpenses').textContent = `£${expenses.toFixed(2)}`;
     document.getElementById('balance').textContent = `£${balance.toFixed(2)}`;
 }
+
+
+// big one below: displaying the transactions list --------- need to build the html not only random JS
+
+function displayTransactions() {
+    const container = document.getElementById('transactionslist');
+
+    if (transactions.length === 0) {
+        container.innerHTML = '<div class="empty-state">No transactions yet. Add your first one above!</div>';
+        return;
+    }
+    const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    // here is the HTML:
+    container.innerHTML = sortedTransactions.map(t => `
+        <div class="transaction-item">
+            <div class="transaction-info">
+                <div class="transaction-desc">${t.description}</div>
+                <div class="transaction-meta">${t.category} • ${formatDate(t.date)}</div>
+            </div>
+            <div class="transaction-amount ${t.type}">
+                ${t.type === 'income' ? '+' : '-'}£${t.amount.toFixed(2)}
+            </div>
+            <button class="btn-delete" onclick="deleteTransaction(${t.id})">Delete</button>
+        </div>
+    `).join('');
+
+    //helper function to format dates
+    function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { day: 'numeric', month: 'short', year: 'numeric' };
+    return date.toLocaleDateString('en-GB', options);
+}
+
+
+}
