@@ -132,20 +132,22 @@ function updateUI() {
 }
 
 
-
-
-
-// Update or create chart (really good)
+// Update or create charts (both of the things)
 function updateChart() {
-    const canvas = document.getElementById('expenseChart');
-    const ctx = canvas.getContext('2d');
-    const expenses = transactions.filter(t => t.type === 'expense');
+    const incomeCanvas = document.getElementById('incomeChart');
+    const expenseCanvas = document.getElementById('expenseChart');
     
-    if (expenses.length === 0) {
-        if (chart) {
-            chart.destroy();
-            chart = null;
-        }
+    // Update both charts
+    updateIncomeChart(incomeCanvas);
+    updateExpenseChart(expenseCanvas);
+}
+
+// Income chart
+function updateIncomeChart(canvas) {
+    const ctx = canvas.getContext('2d');
+    const income = transactions.filter(t => t.type === 'income');
+    
+    if (income.length === 0) {
         canvas.style.display = 'none';
         return;
     }
@@ -153,34 +155,34 @@ function updateChart() {
     canvas.style.display = 'block';
     
     const categoryTotals = {};
-    expenses.forEach(t => {
+    income.forEach(t => {
         if (categoryTotals[t.category]) {
             categoryTotals[t.category] += parseFloat(t.amount);
         } else {
             categoryTotals[t.category] = parseFloat(t.amount);
         }
     });
+    
     const categories = Object.keys(categoryTotals);
     const amounts = Object.values(categoryTotals);
-    if (chart) {
-        chart.destroy();
+    
+    // Destroy existing chart IF IT EXISTS
+    if (window.incomeChart && typeof window.incomeChart.destroy === 'function') {
+        window.incomeChart.destroy();
     }
     
-    // Create new chart
-    chart = new Chart(ctx, {
+    window.incomeChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: categories,
             datasets: [{
                 data: amounts,
                 backgroundColor: [
-                    '#8b5cf6',
-                    '#6366f1',
-                    '#3b82f6',
                     '#10b981',
-                    '#f59e0b',
-                    '#ef4444',
-                    '#ec4899'
+                    '#34d399',
+                    '#6ee7b7',
+                    '#a7f3d0',
+                    '#059669'
                 ],
                 borderColor: '#0a0a0f',
                 borderWidth: 2
@@ -195,17 +197,85 @@ function updateChart() {
                     labels: {
                         color: '#e8e9ed',
                         padding: 15,
-                        font: {
-                            size: 12
-                        }
+                        font: { size: 12 }
                     }
                 },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            const label = context.label || '';
-                            const value = context.parsed || 0;
-                            return `${label}: £${value.toFixed(2)}`;
+                            return `${context.label}: £${context.parsed.toFixed(2)}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Expense chart
+function updateExpenseChart(canvas) {
+    const ctx = canvas.getContext('2d');
+    const expenses = transactions.filter(t => t.type === 'expense');
+    
+    if (expenses.length === 0) {
+        canvas.style.display = 'none';
+        return;
+    }
+    
+    canvas.style.display = 'block';
+    
+    const categoryTotals = {};
+    expenses.forEach(t => {
+        if (categoryTotals[t.category]) {
+            categoryTotals[t.category] += parseFloat(t.amount);
+        } else {
+            categoryTotals[t.category] = parseFloat(t.amount);
+        }
+    });
+    
+    const categories = Object.keys(categoryTotals);
+    const amounts = Object.values(categoryTotals);
+    
+    // Destroy existing chart
+    if (window.expenseChart && typeof window.expenseChart.destroy === 'function') {
+    window.expenseChart.destroy();
+}
+    
+    window.expenseChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: categories,
+            datasets: [{
+                data: amounts,
+                backgroundColor: [
+                    '#ef4444',
+                    '#f87171',
+                    '#fca5a5',
+                    '#fecaca',
+                    '#dc2626',
+                    '#b91c1c',
+                    '#991b1b'
+                ],
+                borderColor: '#0a0a0f',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#e8e9ed',
+                        padding: 15,
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: £${context.parsed.toFixed(2)}`;
                         }
                     }
                 }
