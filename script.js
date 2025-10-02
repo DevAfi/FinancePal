@@ -128,5 +128,88 @@ function deleteTransaction(id) {
 function updateUI() {
     updateSummary();
     displayTransactions();
-    //updateChart();
+    updateChart();
+}
+
+
+
+
+
+// Update or create chart (really good)
+function updateChart() {
+    const canvas = document.getElementById('expenseChart');
+    const ctx = canvas.getContext('2d');
+    const expenses = transactions.filter(t => t.type === 'expense');
+    
+    if (expenses.length === 0) {
+        if (chart) {
+            chart.destroy();
+            chart = null;
+        }
+        canvas.style.display = 'none';
+        return;
+    }
+    
+    canvas.style.display = 'block';
+    
+    const categoryTotals = {};
+    expenses.forEach(t => {
+        if (categoryTotals[t.category]) {
+            categoryTotals[t.category] += parseFloat(t.amount);
+        } else {
+            categoryTotals[t.category] = parseFloat(t.amount);
+        }
+    });
+    const categories = Object.keys(categoryTotals);
+    const amounts = Object.values(categoryTotals);
+    if (chart) {
+        chart.destroy();
+    }
+    
+    // Create new chart
+    chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: categories,
+            datasets: [{
+                data: amounts,
+                backgroundColor: [
+                    '#8b5cf6',
+                    '#6366f1',
+                    '#3b82f6',
+                    '#10b981',
+                    '#f59e0b',
+                    '#ef4444',
+                    '#ec4899'
+                ],
+                borderColor: '#0a0a0f',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#e8e9ed',
+                        padding: 15,
+                        font: {
+                            size: 12
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.parsed || 0;
+                            return `${label}: £${value.toFixed(2)}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
 }
