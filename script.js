@@ -50,3 +50,16 @@ document.getElementById('transactionForm').addEventListener('submit', function(e
     this.reset();
     document.getElementById(date).valueAsDate = new Date();
 });
+
+
+// now for finding the total in vs out
+
+function calculateIncome() {
+    return transactions.filter(t => t.type === 'income').reduce((total, t) => total + parseFloat(t.amount), 0);
+}
+function calculateExpenses() {
+    return transactions.filter(t => t.type === 'expense').reduce((total, t) => total + parseFloat(t.amount), 0);
+}
+function calculateBalance() {
+    return calculateIncome() - calculateExpenses();
+}
