@@ -8,6 +8,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
+    <!-- Floating particles for dynamic background -->
+    <div class="floating-particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+    
     <div class="container">
       <header>
         <h1>Your Personal Finance Tracker</h1>
@@ -131,21 +144,25 @@
 
             <!-- Charts Grid -->
             <div class="charts-grid">
-                <div class="chart-item">
-                    <h3>Income vs Expenses Trend</h3>
-                    <canvas id="trendChart"></canvas>
+                <div class="chart-row">
+                    <div class="chart-item">
+                        <h3>Income vs Expenses Trend</h3>
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                    <div class="chart-item">
+                        <h3>Monthly Spending Patterns</h3>
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
                 </div>
-                <div class="chart-item">
-                    <h3>Monthly Spending Patterns</h3>
-                    <canvas id="monthlyChart"></canvas>
-                </div>
-                <div class="chart-item">
-                    <h3>Income by Category</h3>
-                    <canvas id="incomeChart"></canvas>
-                </div>
-                <div class="chart-item">
-                    <h3>Expenses by Category</h3>
-                    <canvas id="expenseChart"></canvas>
+                <div class="chart-row">
+                    <div class="chart-item">
+                        <h3>Income by Category</h3>
+                        <canvas id="incomeChart"></canvas>
+                    </div>
+                    <div class="chart-item">
+                        <h3>Expenses by Category</h3>
+                        <canvas id="expenseChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
