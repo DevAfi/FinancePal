@@ -4,7 +4,7 @@
 
 ![FinancePal Banner](https://img.shields.io/badge/FinancePal-Advanced%20Finance%20Tracker-8b5cf6?style=for-the-badge&logo=chart.js&logoColor=white)
 
-### 🚀 **[Live Demo](https://polite-alfajores-b90fe1.netlify.app)** 🚀
+### 🚀 **[Live Demo](https://financepalapp.netlify.app)** 🚀
 
 *A sophisticated, feature-rich personal finance management application with advanced analytics and dynamic visualizations*
 
